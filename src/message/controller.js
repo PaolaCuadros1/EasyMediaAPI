@@ -24,7 +24,19 @@ MessageController.post('/', async (req, res) => {
  * GET /messages
  * @return Messages<Array>
  */
-MessageController.post('/getAll', async (req, res) => {
+MessageController.get('/:userId', async (req, res) => {
+    const messages = await MessageService.getAll(req.params.userId)
+    console.log('messages -- ', messages)
+    res.status(201).send({messages})
+})
+
+/**
+ * GET /messages
+ * @return Messages<Array>
+ */
+MessageController.get('/getAll', async (req, res) => {
+    console.log('req --- ', req.params)
+    console.log('req --- ', req.body)
     const mesages = await MessageService.getAll()
     res.status(201).send({ mesages: mesages })
 })
