@@ -7,7 +7,7 @@ const UserService = {
         user.createAt = new Date()
         const docRef = Firestore.collection(COLLECTION_NAME).doc()
         await docRef.set(user)
-        return user.id
+        return docRef.id
     },
 
     async findByEmail (userEmail) {
