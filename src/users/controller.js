@@ -17,10 +17,10 @@ UsersController.post('/', async (req, res) => {
     } else {
         const totalUsers = await UserService.findByEmail(req.body.email)
         if (totalUsers >= 1) {
-            res.status(208).send({ userRegistered: "ok" })
+            res.status(208).send({ userRegistered: "ok", status: false })
         } else {
             const userId = await UserService.create(req.body)
-            res.status(201).send({ userId: userId })
+            res.status(201).send({ status: true })
         }
     }
 })
@@ -32,8 +32,7 @@ UsersController.post('/', async (req, res) => {
 function validate(params) {
     return userSchema.validate({
         userName: params.userName,
-        email: params.email,
-        password: params.password
+        email: params.email
     },
         { abortEarly: false })
 }
