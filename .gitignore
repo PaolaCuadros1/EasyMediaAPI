@@ -1,0 +1,13 @@
+# VS Code
+.vscode/
+.history/
+
+# Node Modules
+node_modules/
+
+# Local Demos or Tests
+demos/
+
+# Credentials
+firebase.json
+.env
