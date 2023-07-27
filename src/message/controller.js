@@ -1,14 +1,14 @@
 import { Router } from 'express'
 import messageSchema from './schema.js'
-import MessageService from './service.js'
+import MessagesService from './service.js'
 
-const MessageController = Router()
+const MessagesController = Router()
 
 /**
  * POST /messages
  * @return Messages
  */
-MessageController.post('/', async (req, res) => {
+MessagesController.post('/', async (req, res) => {
     console.log('req.body -- ', req.body)
     const { error } = validate(req.body)
 
@@ -16,29 +16,28 @@ MessageController.post('/', async (req, res) => {
         console.log(error)
         res.sendStatus(400)
     } else {
-        const messageId = await MessageService.create(req.body)
+        const messageId = await MessagesService.create(req.body)
         res.status(201).send({ messageId: messageId })
     }
 })
-/**
- * GET /messages
- * @return Messages<Array>
- */
-MessageController.get('/:userId', async (req, res) => {
-    const messages = await MessageService.getAll(req.params.userId)
-    console.log('messages -- ', messages)
-    res.status(201).send({messages})
-})
+
+// /**
+//  * GET /messages
+//  * @return Messages<Array>
+//  */
+// MessagesController.get('/:userId', async (req, res) => {
+//     const messages = await MessagesService.getAll(req.params.userId)
+//     console.log('messages -- ', messages)
+//     res.status(201).send({messages})
+// })
 
 /**
  * GET /messages
  * @return Messages<Array>
  */
-MessageController.get('/getAll', async (req, res) => {
-    console.log('req --- ', req.params)
-    console.log('req --- ', req.body)
-    const mesages = await MessageService.getAll()
-    res.status(201).send({ mesages: mesages })
+MessagesController.get('/', async (req, res) => {
+    const messages = await MessagesService.getAll(req.query)
+    res.json(messages)
 })
 
 /**
@@ -54,5 +53,4 @@ function validate(params) {
         { abortEarly: false })
 }
 
-export default MessageController
-
+export default MessagesController
