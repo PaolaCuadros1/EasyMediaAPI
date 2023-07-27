@@ -26,6 +26,19 @@ UsersController.post('/', async (req, res) => {
 })
 
 /**
+ * GET /users/:id
+ * @return User
+ */
+UsersController.get('/:id', async (req, res) => {
+    try {
+        const user = await UserService.findById(req.params.id)
+        res.status(201).send(user)
+    } catch (error) {
+        resError(res, error, 'Error getting Credit Card info.')
+    }
+})
+
+/**
  * @param {*} params => params to validate with Joi. 
  * @returns validated data
  */
